@@ -10,23 +10,6 @@
 #include "vertexbufferlayout.h"
 #include "shader.h"
 
-GLuint CreateShader(std::string& vertex_shader, std::string& fragment_shader)
-{
-	GLuint program = glCreateProgram();
-	GLint vs = CompileShader(GL_VERTEX_SHADER, vertex_shader);
-	GLint fs = CompileShader(GL_FRAGMENT_SHADER, fragment_shader);
-
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-	glLinkProgram(program);
-	glValidateProgram(program);
-
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-
-	return program;
-}
-
 int main(void)
 {
 	GLFWwindow* window;
@@ -83,18 +66,12 @@ int main(void)
 
 	vao->AddBuffer(*vb, *vbl);
 
-	ShaderProgramSource source = ParseShader("lol.shader");
+	Shader * sh = new Shader("lol.shader");
+	unsigned int location = sh->GetUniformLocation("u_color");
 
-	unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
-	glUseProgram(shader);
-
-	unsigned int location = glGetUniformLocation(shader, "u_color");
-	ASSERT(location != -1);
-
-
-	GLErrorWrapper(glGenVertexArrays(1, NULL));
 	vb->Unbind();
 	ib->Unbind();
+	vao->Unbind();
 	GLErrorWrapper(glUseProgram(NULL));
 
 	/* Loop until the user closes the window */
@@ -104,11 +81,11 @@ int main(void)
 			/* Render here */
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			GLErrorWrapper(glUseProgram(shader));
 
 			vao->Bind();
 
-			glUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
+			sh->Bind();
+			sh->SetUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
 
 			ib->Bind();
 
@@ -125,6 +102,7 @@ int main(void)
 		}
 	}
 
+	delete sh;
 	delete vb;
 	delete ib;
 	glfwTerminate();

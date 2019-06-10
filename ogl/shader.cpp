@@ -4,12 +4,6 @@
 #include <fstream>
 #include <sstream>
 
-struct ShaderProgramSource
-{
-	std::string VertexSource;
-	std::string FragmentSource;
-};
-
 static struct ShaderProgramSource ParseShader(const std::string& filepath)
 {
 	enum class ShaderType
@@ -40,7 +34,7 @@ static struct ShaderProgramSource ParseShader(const std::string& filepath)
 	return { ss[0].str(), ss[1].str() };
 }
 
-GLuint Shader::CompileShader(unsigned int type, std::string & shader)
+GLuint CompileShader(unsigned int type, std::string & shader)
 {
 	GLuint id = glCreateShader(type);
 	const char * src = shader.c_str();
@@ -67,35 +61,49 @@ GLuint Shader::CompileShader(unsigned int type, std::string & shader)
 	return id;
 }
 
-Shader::Shader(unsigned int type, const std::string & filepath)
-	: m_type(type), m_filePath(filepath)
+unsigned int Shader::GetUniformLocation(const std::string & name)
 {
-	CompileShader(m_type, );
+	unsigned int location = glGetUniformLocation(m_rendererId, "u_color");
+	ASSERT(location != -1);
+	return location;
 }
 
-GLuint CompileShader(unsigned int type, std::string& shader)
+Shader::Shader(const std::string & filepath)
+	: m_filePath(filepath)
 {
-	GLuint id = glCreateShader(type);
-	const char * src = shader.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
+	shader_program = ParseShader(m_filePath);
+	GLuint program = glCreateProgram();
+	GLint vs = CompileShader(GL_VERTEX_SHADER, shader_program.VertexSource);
+	GLint fs = CompileShader(GL_FRAGMENT_SHADER, shader_program.FragmentSource);
 
-	int res;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &res);
+	m_rendererId = program;
 
-	if (res == GL_FALSE)
-	{
-		int len;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &len);
-		char * message = (char *)alloca(len * sizeof(char));
-		glGetShaderInfoLog(id, len, &len, message);
-		std::cout
-			<< "Failed to compile "
-			<< (type == GL_VERTEX_SHADER ? "vertex" : "fragment")
-			<< "shader"
-			<< std::endl;
-		std::cout << message << std::endl;
-	}
+	glAttachShader(m_rendererId, vs);
+	glAttachShader(m_rendererId, fs);
+	glLinkProgram(m_rendererId);
+	glValidateProgram(m_rendererId);
 
-	return id;
+	glDeleteShader(vs);
+	glDeleteShader(fs);
 }
+
+Shader::~Shader()
+{
+	Unbind();
+}
+
+void Shader::Bind() const
+{
+	GLErrorWrapper(glUseProgram(m_rendererId));
+}
+
+void Shader::Unbind() const
+{
+	GLErrorWrapper(glUseProgram(NULL));
+}
+
+void Shader::SetUniform4f(unsigned int location, float v0, float v1, float v2, float v3)
+{
+	glUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
+}
+

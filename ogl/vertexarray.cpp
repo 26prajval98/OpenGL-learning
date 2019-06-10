@@ -22,7 +22,6 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout & l
 	{
 		const auto& element = elements[i];
 		glEnableVertexAttribArray(i);
-		std::cout << layout.GetStride() << std::endl;
 		glVertexAttribPointer(i, element.count, element.type, GL_FALSE, layout.GetStride(), (const void *)(offset*sizeof(float)));
 		offset += element.count;
 	}
@@ -35,7 +34,5 @@ void VertexArray::Bind()
 
 void VertexArray::Unbind()
 {
-	GLErrorWrapper(glGenVertexArrays(1, NULL));
+	GLErrorWrapper(glBindVertexArray(0));
 }
-
-
