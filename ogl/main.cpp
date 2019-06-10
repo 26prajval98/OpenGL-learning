@@ -189,6 +189,9 @@ int main(void)
 	unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
 	glUseProgram(shader);
 
+	unsigned int location = glGetUniformLocation(shader, "u_color");
+	ASSERT(location != -1);
+
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (GLintptr)0*sizeof(float));
 
@@ -198,6 +201,7 @@ int main(void)
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
 		GLErrorWrapper(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, indices));
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
