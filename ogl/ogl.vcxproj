@@ -145,6 +145,7 @@
     <ClCompile Include="indexbuffer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="shader.cpp" />
     <ClCompile Include="vertexarray.cpp" />
     <ClCompile Include="vertexbuffer.cpp" />
     <ClCompile Include="vertexbufferlayout.cpp" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="indexbuffer.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="shader.h" />
     <ClInclude Include="vertexarray.h" />
     <ClInclude Include="vertexbuffer.h" />
     <ClInclude Include="vertexbufferlayout.h" />
