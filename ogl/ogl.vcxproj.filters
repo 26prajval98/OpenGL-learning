@@ -13,10 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\rsc">
+      <UniqueIdentifier>{544861b2-81d3-4891-95e7-5a3cf61463e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rsc\shaders">
+      <UniqueIdentifier>{f29d756c-e9e8-4104-8cbd-35a146bfa7b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lol.shader">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
