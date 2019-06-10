@@ -142,10 +142,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="indexbuffer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="vertexarray.cpp" />
+    <ClCompile Include="vertexbuffer.cpp" />
+    <ClCompile Include="vertexbufferlayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lol.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="indexbuffer.h" />
+    <ClInclude Include="renderer.h" />
+    <ClInclude Include="vertexarray.h" />
+    <ClInclude Include="vertexbuffer.h" />
+    <ClInclude Include="vertexbufferlayout.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
