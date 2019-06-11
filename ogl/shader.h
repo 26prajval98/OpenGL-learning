@@ -25,4 +25,5 @@ public:
 	void Unbind() const;
 	unsigned int GetUniformLocation(const std::string& name);
 	void SetUniform4f(unsigned int location, float v0, float v1, float v2, float v3);
+	void SetUniform1f(unsigned int location, float v0);
 };

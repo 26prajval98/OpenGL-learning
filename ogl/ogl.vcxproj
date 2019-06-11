@@ -146,6 +146,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="vertexarray.cpp" />
     <ClCompile Include="vertexbuffer.cpp" />
     <ClCompile Include="vertexbufferlayout.cpp" />
@@ -154,12 +156,43 @@
     <None Include="lol.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="glm\common.hpp" />
+    <ClInclude Include="glm\exponential.hpp" />
+    <ClInclude Include="glm\ext.hpp" />
+    <ClInclude Include="glm\fwd.hpp" />
+    <ClInclude Include="glm\geometric.hpp" />
+    <ClInclude Include="glm\glm.hpp" />
+    <ClInclude Include="glm\integer.hpp" />
+    <ClInclude Include="glm\mat2x2.hpp" />
+    <ClInclude Include="glm\mat2x3.hpp" />
+    <ClInclude Include="glm\mat2x4.hpp" />
+    <ClInclude Include="glm\mat3x2.hpp" />
+    <ClInclude Include="glm\mat3x3.hpp" />
+    <ClInclude Include="glm\mat3x4.hpp" />
+    <ClInclude Include="glm\mat4x2.hpp" />
+    <ClInclude Include="glm\mat4x3.hpp" />
+    <ClInclude Include="glm\mat4x4.hpp" />
+    <ClInclude Include="glm\matrix.hpp" />
+    <ClInclude Include="glm\packing.hpp" />
+    <ClInclude Include="glm\trigonometric.hpp" />
+    <ClInclude Include="glm\vec2.hpp" />
+    <ClInclude Include="glm\vec3.hpp" />
+    <ClInclude Include="glm\vec4.hpp" />
+    <ClInclude Include="glm\vector_relational.hpp" />
     <ClInclude Include="indexbuffer.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="vertexarray.h" />
     <ClInclude Include="vertexbuffer.h" />
     <ClInclude Include="vertexbufferlayout.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="kbit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="glm\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

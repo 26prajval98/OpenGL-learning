@@ -41,3 +41,16 @@ bool GLCheckError()
 	}
 	return true;
 }
+
+void Renderer::Draw(VertexArray*& vao, IndexBuffer*& ib, Shader*& shader) const
+{
+	shader->Bind();
+	vao->Bind();
+	ib->Bind();
+}
+
+void Renderer::Clear() const
+{
+	/* Render here */
+	glClear(GL_COLOR_BUFFER_BIT);
+}

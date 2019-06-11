@@ -9,6 +9,10 @@
 #include "vertexarray.h"
 #include "vertexbufferlayout.h"
 #include "shader.h"
+#include "texture.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 int main(void)
 {
@@ -44,10 +48,10 @@ int main(void)
 	}
 
 	float pos[] = {
-		-0.5f, -0.5f,
-		0.5f, -0.5f,
-		0.5f, 0.5f,
-		-0.5f, 0.5f,
+		-0.5f, -0.5f, 0.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 0.0f,
+		0.5f, 0.5f, 1.0f, 1.0f,
+		-0.5f, 0.5f, 0.0f, 1.0f,
 	};
 
 	unsigned int indices[] = {
@@ -55,39 +59,44 @@ int main(void)
 		2, 3, 0,
 	};
 	
+	GLErrorWrapper(glEnable(GL_BLEND));
+	GLErrorWrapper(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
 	VertexArray * vao = new VertexArray();
 
-	VertexBuffer * vb = new VertexBuffer(pos, 4 * 2 * sizeof(float));
+	VertexBuffer * vb = new VertexBuffer(pos, 4 * 4 * sizeof(float));
 	IndexBuffer * ib = new IndexBuffer(indices, 6);
+
+	glm::mat4 projection = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
 
 	VertexBufferLayout * vbl = new VertexBufferLayout();
 
+	vbl->Push<float>(2);
 	vbl->Push<float>(2);
 
 	vao->AddBuffer(*vb, *vbl);
 
 	Shader * sh = new Shader("lol.shader");
-	unsigned int location = sh->GetUniformLocation("u_color");
+	unsigned int location = sh->GetUniformLocation("u_texture");
+	sh->SetUniform1f(location, 0);
+
+	Texture * tex = new Texture("kbit.png");
+	tex->Bind();
 
 	vb->Unbind();
 	ib->Unbind();
 	vao->Unbind();
 	GLErrorWrapper(glUseProgram(NULL));
 
+	const auto r = Renderer();
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		{
 			/* Render here */
-			glClear(GL_COLOR_BUFFER_BIT);
-
-
-			vao->Bind();
-
-			sh->Bind();
-			sh->SetUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
-
-			ib->Bind();
+			r.Clear();
+			r.Draw(vao, ib, sh);
 
 			//Either bind here or bind in glDrawElements but not both
 			//GLErrorWrapper(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, indices));

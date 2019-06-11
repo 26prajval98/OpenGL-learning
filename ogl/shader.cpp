@@ -63,7 +63,7 @@ GLuint CompileShader(unsigned int type, std::string & shader)
 
 unsigned int Shader::GetUniformLocation(const std::string & name)
 {
-	unsigned int location = glGetUniformLocation(m_rendererId, "u_color");
+	unsigned int location = glGetUniformLocation(m_rendererId, "u_texture");
 	ASSERT(location != -1);
 	return location;
 }
@@ -105,5 +105,10 @@ void Shader::Unbind() const
 void Shader::SetUniform4f(unsigned int location, float v0, float v1, float v2, float v3)
 {
 	glUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
+}
+
+void Shader::SetUniform1f(unsigned int location, float v0)
+{
+	glUniform1f(location, v0);
 }
 
