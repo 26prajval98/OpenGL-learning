@@ -67,8 +67,6 @@ int main(void)
 	VertexBuffer * vb = new VertexBuffer(pos, 4 * 4 * sizeof(float));
 	IndexBuffer * ib = new IndexBuffer(indices, 6);
 
-	glm::mat4 projection = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
-
 	VertexBufferLayout * vbl = new VertexBufferLayout();
 
 	vbl->Push<float>(2);

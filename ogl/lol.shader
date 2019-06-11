@@ -6,11 +6,9 @@ layout(location = 1) in vec2 tex;
 
 out vec2 v_tex;
 
-uniform mat4 u_MVP;
-
 void main()
 {
-	gl_Position = u_MVP * position;
+	gl_Position = position;
 	v_tex = tex;
 }
 
