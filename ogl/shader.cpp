@@ -64,7 +64,7 @@ GLuint CompileShader(unsigned int type, std::string & shader)
 unsigned int Shader::GetUniformLocation(const std::string & name)
 {
 	unsigned int location = glGetUniformLocation(m_rendererId, name.c_str());
-	//ASSERT(location != -1);
+	ASSERT(location != -1);
 	return location;
 }
 
